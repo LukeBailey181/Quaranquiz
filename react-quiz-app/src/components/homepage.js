@@ -11,11 +11,11 @@ export default function HomePage(props) {
     const [redirect, setRedirect] = useState(false);
 
     const toMakeQuiz = () => {
-        setRedirect(!redirect);
+        setRedirect(true);
     }
 
     if (redirect) {
-        return <Redirect push to="/makeQuiz" />;
+        return <Redirect push to="/quizOverview" />;
     }
 
     return (

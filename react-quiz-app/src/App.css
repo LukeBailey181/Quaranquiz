@@ -42,6 +42,10 @@
   width: 20vh;
 }
 
+.padded-container {
+  padding: 20px;
+}
+
 
 /*---------Advanced Field Styling-----------*/
 .field {

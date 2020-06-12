@@ -2,43 +2,28 @@ import React, { component, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Redirect} from 'react-router';
 import { NameForm } from './helperUIcomponents.js';
+import Button from 'react-bootstrap/Button';
 
-function QuestionInput(props) {
+export default function QuizOverview(props) {
 
-    const [questionNumber, setQuestionNumber] = useState(1);
-
-    const incrementQ = () => {
-        setQuestionNumber(questionNumber + 1);
-    }
-
-    return(
-        <div>  
-            <h2>Qestion {questionNumber}</h2>
-            <div>
-                <NameForm fieldText = ""/>
-            </div>
-            <h2>Answer {questionNumber}</h2>
-            <div>
-                <NameForm fieldText = ""/>
-            </div>
-            <button onClick={incrementQ} type="button" class="btn btn-primary btn-lg">
-                Add Question
-            </button>
-        </div>
-    )
-}
-
-export default function MakeQuiz(props) {
-
+    /*----------Navigation Helpers Start----------*/
     const [homeRedirect, setHomeRedirect] = useState(false);
+    const [makeRoundRedirect, setMakeRoundRedirect] = useState(false);
 
     const toHome = () => {
         setHomeRedirect(true);
+    }
+    const toMakeRound = () => {
+        setMakeRoundRedirect(true);
     }
 
     if (homeRedirect) {
         return <Redirect push to="/" />;
     }
+    if (makeRoundRedirect) {
+        return <Redirect push to="/makeRound" />;
+    }
+    /*----------Navigation Helpers End----------*/
 
     return(
         <div className="full-screen-container">  
@@ -50,8 +35,12 @@ export default function MakeQuiz(props) {
                 </div>
             </div>
             <div className="central">
-                <QuestionInput />
+                <h2>Here you can see an overview of your quiz and edit section</h2>
+                <h3>Click 'add round' to add a round</h3>  
+                <div className="padded-container">   
+                    <Button variant="success" onClick={toMakeRound}>Add Round</Button>
+                </div>  
             </div>
         </div>
-    );
+    )
 }

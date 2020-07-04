@@ -8,7 +8,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import cellEditFactory from 'react-bootstrap-table2-editor';
 import MaterialTable from 'material-table';
 
-export function MaterialTableDemo(props) {
+export function CustomTable(props) {
 
     const round = String(props.round)
       
@@ -74,7 +74,7 @@ export default function MakeRound(props) {
 
     const [numRows, setNumRows] = useState(1);
     const [round, setRound] = useState(1) //placeholder, this should be handed down from the quiz overview page
-     const [state, setState] = useState({ columns: [
+    const [state, setState] = useState({ columns: [
         //{ title: 'Quesition Number', field: 'tableData.id', type:'numeric', editable:false },
         { title: 'Question', field: 'question' },
         { title: 'Answer', field: 'answer' },
@@ -86,6 +86,7 @@ export default function MakeRound(props) {
 
     const [homeRedirect, setHomeRedirect] = useState(false);
     const [quizOverviewRedirect, setQuizOverviewRedirect] = useState(false);
+
 
     /*----------Navigation Helpers Start----------*/
     const toHome = () => {
@@ -105,7 +106,9 @@ export default function MakeRound(props) {
     const printProducts = () => {
         console.log(state.data);
     }
-
+    const printQuiz = () => {
+        console.log(props.quiz)
+    }
     return(
         <div className="full-screen-container">  
             <div className ="upper-left-container">
@@ -119,14 +122,17 @@ export default function MakeRound(props) {
                 </div>
             </div>
             <div className="central" style={{width:'100%'}}>
-                <MaterialTableDemo 
+                <CustomTable 
                     state={state}
                     setState={setState}  
                     numRows={numRows}  
                     setNumRows={setNumRows}
                     round={round}
+                    quiz={props.quiz}
+                    setQuiz={props.setQuiz}
                 />
                 <Button variant="primary" size='lg' onClick={printProducts}>Print Products</Button>
+                <Button variant="primary" size='lg' onClick={printQuiz}>Print Quiz</Button>
             </div>
         </div>
     );

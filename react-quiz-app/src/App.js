@@ -12,11 +12,25 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
 
 function App() {
-  const[quiz, setQuiz] = useState([])
+  
+  const[quiz, setQuiz] = useState({
+    quiz_id : 1, //to accesss quiz to play
+    maker_id: 1, //to access quiz to edit and mark responses
+    num_rounds : 1,
+    quiz : []
+    }
+  )
 
   return (
     <Router>
-        <Route exact path='/' component={withRouter(HomePage)} />
+        <Route exact 
+          path='/' 
+          render={() => {
+            return(
+              <HomePage quiz={quiz} setQuiz={setQuiz} />
+            )
+          }}
+        />
         <Route exact path='/quiz' component={withRouter(QuizPage)} />
         <Route exact 
           path='/quizOverview' 
@@ -25,7 +39,13 @@ function App() {
             <QuizOverview quiz={quiz} setQuiz={setQuiz} />)
           }}
         />
-        <Route exact path='/makeRound' component={withRouter(MakeRound)} />
+        <Route exact 
+          path='/makeRound'
+          render={() => {
+            return(
+            <MakeRound quiz={quiz} setQiz={setQuiz} />)
+          }}
+        />
     </Router>
   );
 }

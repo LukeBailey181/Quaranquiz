@@ -1,4 +1,4 @@
-import React, { component, useState } from 'react';
+import React, { component, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link, withRouter, useRouteMatch } from 'react-router-dom';
 import { Redirect} from 'react-router';
 import { NameForm } from './helperUIcomponents';
@@ -22,6 +22,8 @@ export default function QuizOverview(props) {
     const toMakeRound = () => {
         setMakeRoundRedirect(true);
     }
+    
+
 
     if (homeRedirect) {
         return <Redirect psuh to="/" />;
@@ -47,7 +49,7 @@ export default function QuizOverview(props) {
                 <div className="padded-container" style={{flexDirection:"column"}}>   
                     <Button variant="success" onClick={toMakeRound}>Add Round</Button>
                 </div>  
-                <Button variant="success" onClick={() => console.log(quiz)}>Print Quiz</Button>
+                <Button variant="success" onClick={() => console.log(props.quiz)}>Print Quiz</Button>
             </div>
         </div>
     )

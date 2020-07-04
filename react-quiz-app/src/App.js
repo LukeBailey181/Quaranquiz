@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import  'bootstrap/dist/css/bootstrap.min.css';
@@ -12,12 +12,20 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
 
 function App() {
+  const[quiz, setQuiz] = useState([])
+
   return (
     <Router>
         <Route exact path='/' component={withRouter(HomePage)} />
-        <Route path='/quiz' component={withRouter(QuizPage)} />
-        <Route path='/quizOverview' component={withRouter(QuizOverview)} />
-        <Route path='/makeRound' component={withRouter(MakeRound)} />
+        <Route exact path='/quiz' component={withRouter(QuizPage)} />
+        <Route exact 
+          path='/quizOverview' 
+          render={() => {
+            return(
+            <QuizOverview quiz={quiz} setQuiz={setQuiz} />)
+          }}
+        />
+        <Route exact path='/makeRound' component={withRouter(MakeRound)} />
     </Router>
   );
 }

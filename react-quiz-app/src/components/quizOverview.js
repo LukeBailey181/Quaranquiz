@@ -7,15 +7,23 @@ import MakeRound from './makeRound'
 import createPalette from '@material-ui/core/styles/createPalette';
 
 export default function QuizOverview(props) {
-    
-    /*----------Quiz State-----------*/
-    const [quiz, setQuiz] = useState([])
 
-    /*----------Navigation Helpers Start----------*/
+    /*----------Navigation State----------*/
     const [homeRedirect, setHomeRedirect] = useState(false);
     const [makeRoundRedirect, setMakeRoundRedirect] = useState(false);
-    let { path, url } = useRouteMatch();
 
+    var tableData = []
+    //prepares data for rounds table 
+    useEffect(() => {
+        for(let i; i < props.quiz.quiz.length; i++) {
+            let temp_round = {
+                round: i + 1,
+                round_length: props.quiz.quiz[i].length,
+            }
+        }
+    },[])
+
+    //navigation functions and conditions
     const toHome = () => {
         setHomeRedirect(true);
     }
@@ -23,18 +31,16 @@ export default function QuizOverview(props) {
         setMakeRoundRedirect(true);
     }
     
-
-
     if (homeRedirect) {
         return <Redirect psuh to="/" />;
     }
     if (makeRoundRedirect) {
         return <Redirect to={{
             pathname: '/makeRound',
-            state: { quiz: quiz }
         }} />;
     }
     /*----------Navigation Helpers End----------*/
+    
 
     return(
         <div className="full-screen-container">  

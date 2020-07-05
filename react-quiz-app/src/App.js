@@ -43,7 +43,7 @@ function App() {
           path='/makeRound'
           render={() => {
             return(
-            <MakeRound quiz={quiz} setQiz={setQuiz} />)
+            <MakeRound quiz={quiz} setQuiz={setQuiz} />)
           }}
         />
     </Router>

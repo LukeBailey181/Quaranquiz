@@ -17,6 +17,7 @@
     "react-bootstrap-table2-editor": "^1.4.0",
     "react-data-grid": "^7.0.0-canary.16",
     "react-dom": "^16.13.1",
+    "react-nice-inputs": "^1.0.61",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "table": "^5.4.6"

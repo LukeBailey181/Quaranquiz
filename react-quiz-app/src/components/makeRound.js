@@ -1,4 +1,4 @@
-import React, { component, useState, useEffect } from 'react';
+import React, { component, useState, useEffect, form } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link, withRouter } from 'react-router-dom';
 import { Redirect} from 'react-router';
 import { NameForm } from './helperUIcomponents.js';
@@ -7,6 +7,18 @@ import Table from 'react-bootstrap/Table';
 import BootstrapTable from 'react-bootstrap-table-next';
 import cellEditFactory from 'react-bootstrap-table2-editor';
 import MaterialTable from 'material-table';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
+
+//for material UI input box
+const useStyles = makeStyles((theme) => ({
+    root: {
+      '& > *': {
+        margin: theme.spacing(1),
+        width: '25ch',
+      },
+    },
+  }));
 
 export function CustomTable(props) {
 
@@ -75,7 +87,6 @@ export default function MakeRound(props) {
     const [numRows, setNumRows] = useState(1);
     const [round, setRound] = useState(1) //placeholder, this should be handed down from the quiz overview page
     const [state, setState] = useState({ columns: [
-        //{ title: 'Quesition Number', field: 'tableData.id', type:'numeric', editable:false },
         { title: 'Question', field: 'question' },
         { title: 'Answer', field: 'answer' },
       ],
@@ -83,10 +94,11 @@ export default function MakeRound(props) {
         {  qn: "1", question:'Input Question' , answer:'Input Answer' },
       ],
     });
-
+    const [roundName, setRoundName] = useState("");
     const [homeRedirect, setHomeRedirect] = useState(false);
     const [quizOverviewRedirect, setQuizOverviewRedirect] = useState(false);
 
+    const classes = useStyles(); //for material UI input
 
     /*----------Navigation Helpers Start----------*/
     const toHome = () => {
@@ -106,8 +118,25 @@ export default function MakeRound(props) {
     const printProducts = () => {
         console.log(state.data);
     }
+    const printRoundName = () => {
+        console.log(roundName)
+    }
     const printQuiz = () => {
         console.log(props.quiz)
+    }
+    const printData = () => {
+        console.log(state.data)
+    }
+    const addRound = () => {
+        let temp_round=[]
+        for (let qaPair of state.data) {
+            let qa = {question: qaPair.question, answer:qaPair.answer};
+            temp_round.push(qa)
+        }
+        let data = Object.assign({}, props.quiz);
+        data.quiz.push(temp_round)
+        props.setQuiz(data)
+        setQuizOverviewRedirect(true)
     }
     return(
         <div className="full-screen-container">  
@@ -122,6 +151,17 @@ export default function MakeRound(props) {
                 </div>
             </div>
             <div className="central" style={{width:'100%'}}>
+            <form className={classes.root} noValidate autoComplete="off">
+                <TextField 
+                    id="outlined-basic" 
+                    label="Round Title" 
+                    variant="outlined"
+                    onChange={(e) => {
+                        const { value } = e.target;
+                        setRoundName(value)
+                    }}
+                 />
+            </form>
                 <CustomTable 
                     state={state}
                     setState={setState}  
@@ -133,6 +173,9 @@ export default function MakeRound(props) {
                 />
                 <Button variant="primary" size='lg' onClick={printProducts}>Print Products</Button>
                 <Button variant="primary" size='lg' onClick={printQuiz}>Print Quiz</Button>
+                <Button variant="primary" size='lg' onClick={printData}>Print Data</Button>
+                <Button variant="success" size='lg' onClick={addRound}>Add Round</Button>
+                <Button variant="success" size='lg' onClick={printRoundName}>Print Round Name</Button>
             </div>
         </div>
     );
